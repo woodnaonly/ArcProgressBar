@@ -36,7 +36,7 @@ public class ArcProgress extends View
     private int decimal_digits;
 
     private float strokeWidth;
-    private float suffixTextSize;
+
     private float bottomTextSize;
     private String bottomText;
 
@@ -62,7 +62,6 @@ public class ArcProgress extends View
     private int finishedStrokeColor;
     private int unfinishedStrokeColor;
     private float arcAngle;
-    private String suffixText = "%";
     private float suffixTextPadding;
     private float arcBottomHeight;
 
@@ -81,7 +80,6 @@ public class ArcProgress extends View
 
     private static final String INSTANCE_STATE = "saved_instance";
     private static final String INSTANCE_STROKE_WIDTH = "stroke_width";
-    private static final String INSTANCE_SUFFIX_TEXT_SIZE = "suffix_text_size";
     private static final String INSTANCE_SUFFIX_TEXT_PADDING = "suffix_text_padding";
     private static final String INSTANCE_BOTTOM_TEXT_SIZE = "bottom_text_size";
     private static final String INSTANCE_BOTTOM_TEXT = "bottom_text";
@@ -106,7 +104,6 @@ public class ArcProgress extends View
     private static final String INSTANCE_FINISHED_STROKE_COLOR = "finished_stroke_color";
     private static final String INSTANCE_UNFINISHED_STROKE_COLOR = "unfinished_stroke_color";
     private static final String INSTANCE_ARC_ANGLE = "arc_angle";
-    private static final String INSTANCE_SUFFIX = "suffix";
 
     public ArcProgress(Context context)
     {
@@ -169,10 +166,13 @@ public class ArcProgress extends View
         //字体大小
         progressTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_progress_text_size, default_text_size);
 
+        //旁边字体的字体
         progressSuffixText = attributes.getString(R.styleable.ArcProgress_arc_progress_suffix_text);
         if (progressSuffixText == null)
             progressSuffixText = "";
+        //旁边字体的颜色
         progressSuffixTextColor = attributes.getColor(R.styleable.ArcProgress_arc_progress_suffix_text_color, default_text_color);
+        //旁边字体的宽度
         progressSuffixTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_progress_suffix_text_size, default_text_size);
 
 
@@ -185,13 +185,6 @@ public class ArcProgress extends View
         setProgress(attributes.getInt(R.styleable.ArcProgress_arc_progress, 0));
         //宽带
         strokeWidth = attributes.getDimension(R.styleable.ArcProgress_arc_stroke_width, default_stroke_width);
-        //旁边字体的宽度
-        suffixTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_suffix_text_size, default_suffix_text_size);
-        //旁边字体的字体
-        suffixText = TextUtils.isEmpty(attributes.getString(R.styleable.ArcProgress_arc_suffix_text)) ? default_suffix_text : attributes.getString(R.styleable.ArcProgress_arc_suffix_text);
-
-        //旁边字体
-        suffixTextPadding = attributes.getDimension(R.styleable.ArcProgress_arc_suffix_text_padding, default_suffix_padding);
         //底部文字大小
         bottomTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_bottom_text_size, default_bottom_text_size);
         //底部文字
@@ -233,16 +226,6 @@ public class ArcProgress extends View
         this.invalidate();
     }
 
-    public float getSuffixTextSize()
-    {
-        return suffixTextSize;
-    }
-
-    public void setSuffixTextSize(float suffixTextSize)
-    {
-        this.suffixTextSize = suffixTextSize;
-        this.invalidate();
-    }
 
     public String getBottomText()
     {
@@ -374,17 +357,17 @@ public class ArcProgress extends View
         this.arcAngle = arcAngle;
         this.invalidate();
     }
+//
+//    public String getSuffixText()
+//    {
+//        return suffixText;
+//    }
 
-    public String getSuffixText()
-    {
-        return suffixText;
-    }
-
-    public void setSuffixText(String suffixText)
-    {
-        this.suffixText = suffixText;
-        this.invalidate();
-    }
+//    public void setSuffixText(String suffixText)
+//    {
+//        this.suffixText = suffixText;
+//        this.invalidate();
+//    }
 
     public float getSuffixTextPadding()
     {
@@ -412,7 +395,6 @@ public class ArcProgress extends View
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
-//        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
         int width = MeasureSpec.getSize(widthMeasureSpec);
         rectF.set(strokeWidth / 2f, strokeWidth / 2f, width - strokeWidth / 2f, MeasureSpec.getSize(heightMeasureSpec) - strokeWidth / 2f);
         float radius = width / 2f;
@@ -517,20 +499,13 @@ public class ArcProgress extends View
 
     public String mText = "0.00";
     public boolean isText = false;
-//    private String progressSuffixText = "%";
-//    private float progressSuffixTextSize;
-//    private int progressSuffixTextColor;
 
-    //    private static final String INSTANCE_PROGRESS_SUFFIX_TEXT = "progress__suffix_text";
-//    private static final String INSTANCE_PROGRESS_SUFFIX_TEXT_SIZE = "progress_suffix_text_size";
-//    private static final String INSTANCE_PROGRESS_SUFFIX_TEXT_COLOR = "progress_suffix_text_color";
     @Override
     protected Parcelable onSaveInstanceState()
     {
         final Bundle bundle = new Bundle();
         bundle.putParcelable(INSTANCE_STATE, super.onSaveInstanceState());
         bundle.putFloat(INSTANCE_STROKE_WIDTH, getStrokeWidth());
-        bundle.putFloat(INSTANCE_SUFFIX_TEXT_SIZE, getSuffixTextSize());
         bundle.putFloat(INSTANCE_SUFFIX_TEXT_PADDING, getSuffixTextPadding());
         bundle.putFloat(INSTANCE_BOTTOM_TEXT_SIZE, getBottomTextSize());
         bundle.putString(INSTANCE_BOTTOM_TEXT, getBottomText());
@@ -556,7 +531,6 @@ public class ArcProgress extends View
         bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedStrokeColor());
         bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
         bundle.putFloat(INSTANCE_ARC_ANGLE, getArcAngle());
-        bundle.putString(INSTANCE_SUFFIX, getSuffixText());
         return bundle;
     }
 
@@ -567,7 +541,6 @@ public class ArcProgress extends View
         {
             final Bundle bundle = (Bundle) state;
             strokeWidth = bundle.getFloat(INSTANCE_STROKE_WIDTH);
-            suffixTextSize = bundle.getFloat(INSTANCE_SUFFIX_TEXT_SIZE);
             suffixTextPadding = bundle.getFloat(INSTANCE_SUFFIX_TEXT_PADDING);
             bottomTextSize = bundle.getFloat(INSTANCE_BOTTOM_TEXT_SIZE);
             bottomText = bundle.getString(INSTANCE_BOTTOM_TEXT);
@@ -595,7 +568,7 @@ public class ArcProgress extends View
             setProgress(bundle.getInt(INSTANCE_PROGRESS));
             finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
             unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
-            suffixText = bundle.getString(INSTANCE_SUFFIX);
+
             initPainters();
             super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE));
             return;

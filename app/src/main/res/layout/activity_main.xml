@@ -64,4 +64,6 @@
         app:arc_stroke_width="8dp"
         app:arc_unfinished_color="#cb4628"
         app:decimal_digits="2"/>
+
+    <!--app:arc_bottom_text="测试号"-->
 </RelativeLayout>
