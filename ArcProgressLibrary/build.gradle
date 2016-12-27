@@ -1,0 +1,16 @@
+apply plugin: 'com.android.library'
+def dep = rootProject.ext.dependencies
+def androidversion=rootProject.ext.android
+android {
+    compileSdkVersion androidversion.compileSdkVersion
+    buildToolsVersion androidversion.buildToolsVersion
+    defaultConfig {
+        targetSdkVersion androidversion.targetSdkVersion
+        minSdkVersion androidversion.minSdkVersion
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile dep.appcompat_v7
+}

@@ -1,0 +1,27 @@
+apply plugin: 'com.android.application'
+def dep = rootProject.ext.dependencies
+def androidversion=rootProject.ext.android
+android {
+    compileSdkVersion androidversion.compileSdkVersion
+    buildToolsVersion androidversion.buildToolsVersion
+    defaultConfig {
+        applicationId androidversion.applicationId
+        minSdkVersion androidversion.minSdkVersion
+        targetSdkVersion androidversion.targetSdkVersion
+        versionCode androidversion.versionCode
+        versionName androidversion.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile dep.appcompat_v7
+    compile project(':ArcProgressLibrary')
+}
