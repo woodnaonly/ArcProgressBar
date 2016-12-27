@@ -1,5 +1,6 @@
 package com.woodnaonly.arcprogress;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -27,6 +28,7 @@ import java.text.DecimalFormat;
  */
 public class ArcProgress extends View
 {
+    private int DURATION = 500;
     private Context mContext;
     private Paint paint;
     protected Paint textPaint;
@@ -189,6 +191,31 @@ public class ArcProgress extends View
         bottomTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_bottom_text_size, default_bottom_text_size);
         //底部文字
         bottomText = attributes.getString(R.styleable.ArcProgress_arc_bottom_text);
+    }
+
+    ValueAnimator mValueAnimator;
+    public void startAnim()
+    {
+        this.startAnim(DURATION);
+    }
+
+    public void startAnim(int duration)
+    {
+        if (mValueAnimator == null)
+        {
+            mValueAnimator = ValueAnimator.ofInt(0, (int) getMax());
+            mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+            {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation)
+                {
+                    int animatorValue = (int) animation.getAnimatedValue();
+                    setProgress(animatorValue);
+                }
+            });
+        }
+        mValueAnimator.setDuration(duration);
+        mValueAnimator.start();
     }
 
     protected void initPainters()
@@ -401,7 +428,7 @@ public class ArcProgress extends View
         float angle = (360 - arcAngle) / 2f;
         arcBottomHeight = radius * (float) (1 - Math.cos(angle / 180 * Math.PI));
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
-        super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
