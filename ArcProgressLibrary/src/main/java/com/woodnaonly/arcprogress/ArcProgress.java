@@ -408,8 +408,8 @@ public class ArcProgress extends View {
         }
 
 
-        rectF.set(strokeWidth, strokeWidth, widthSize - strokeWidth, heightSize - strokeWidth);
-        float radius = widthSize / 2f;
+        rectF.set(strokeWidth/ 2f, strokeWidth/ 2f, widthSize - strokeWidth/ 2f, heightSize - strokeWidth/ 2f);
+        float radius = widthSize ;
         float angle = (360 - arcAngle) / 2f;
         arcBottomHeight = radius * (float) (1 - Math.cos(angle / 180 * Math.PI));
     }
