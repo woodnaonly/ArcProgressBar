@@ -13,8 +13,8 @@ import android.os.Parcelable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.arcprogress.R;
 
@@ -26,8 +26,7 @@ import java.text.DecimalFormat;
  * 内容：
  * 备注：
  */
-public class ArcProgress extends View
-{
+public class ArcProgress extends View {
     private int DURATION = 500;
     private Context mContext;
     private Paint paint;
@@ -107,18 +106,15 @@ public class ArcProgress extends View
     private static final String INSTANCE_UNFINISHED_STROKE_COLOR = "unfinished_stroke_color";
     private static final String INSTANCE_ARC_ANGLE = "arc_angle";
 
-    public ArcProgress(Context context)
-    {
+    public ArcProgress(Context context) {
         this(context, null);
     }
 
-    public ArcProgress(Context context, AttributeSet attrs)
-    {
+    public ArcProgress(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ArcProgress(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public ArcProgress(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
         default_text_size = Utils.sp2px(getResources(), 18);
@@ -135,8 +131,7 @@ public class ArcProgress extends View
         initPainters();
     }
 
-    protected void initByAttributes(TypedArray attributes)
-    {
+    protected void initByAttributes(TypedArray attributes) {
         //画弧度的颜色
         finishedStrokeColor = attributes.getColor(R.styleable.ArcProgress_arc_finished_color, default_finished_color);
         //底色
@@ -179,13 +174,13 @@ public class ArcProgress extends View
 
 
         decimal_digits = attributes.getInt(R.styleable.ArcProgress_decimal_digits, 0);
-        //弧度？
+        //弧度
         arcAngle = attributes.getFloat(R.styleable.ArcProgress_arc_angle, default_arc_angle);
         //最大值
         setMax(attributes.getInt(R.styleable.ArcProgress_arc_max, default_max));
         //默认值
         setProgress(attributes.getInt(R.styleable.ArcProgress_arc_progress, 0));
-        //宽带
+        //弧度的宽度
         strokeWidth = attributes.getDimension(R.styleable.ArcProgress_arc_stroke_width, default_stroke_width);
         //底部文字大小
         bottomTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_bottom_text_size, default_bottom_text_size);
@@ -193,22 +188,18 @@ public class ArcProgress extends View
         bottomText = attributes.getString(R.styleable.ArcProgress_arc_bottom_text);
     }
 
-    ValueAnimator mValueAnimator;
-    public void startAnim()
-    {
+    private ValueAnimator mValueAnimator;
+
+    public void startAnim() {
         this.startAnim(DURATION);
     }
 
-    public void startAnim(int duration)
-    {
-        if (mValueAnimator == null)
-        {
+    public void startAnim(int duration) {
+        if (mValueAnimator == null) {
             mValueAnimator = ValueAnimator.ofInt(0, (int) getMax());
-            mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
-            {
+            mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
-                public void onAnimationUpdate(ValueAnimator animation)
-                {
+                public void onAnimationUpdate(ValueAnimator animation) {
                     int animatorValue = (int) animation.getAnimatedValue();
                     setProgress(animatorValue);
                 }
@@ -218,8 +209,7 @@ public class ArcProgress extends View
         mValueAnimator.start();
     }
 
-    protected void initPainters()
-    {
+    protected void initPainters() {
         textPaint = new TextPaint();
         textPaint.setColor(progressTextColor);
         textPaint.setTextSize(progressTextSize);
@@ -236,151 +226,123 @@ public class ArcProgress extends View
     }
 
     @Override
-    public void invalidate()
-    {
+    public void invalidate() {
         initPainters();
         super.invalidate();
     }
 
-    public float getStrokeWidth()
-    {
+    public float getStrokeWidth() {
         return strokeWidth;
     }
 
-    public void setStrokeWidth(float strokeWidth)
-    {
+    public void setStrokeWidth(float strokeWidth) {
         this.strokeWidth = strokeWidth;
         this.invalidate();
     }
 
 
-    public String getBottomText()
-    {
+    public String getBottomText() {
         return bottomText;
     }
 
-    public void setBottomText(String bottomText)
-    {
+    public void setBottomText(String bottomText) {
         this.bottomText = bottomText;
         this.invalidate();
     }
 
-    public double getProgress()
-    {
+    public double getProgress() {
         return progress;
     }
 
-    public void setProgress(double progress)
-    {
-        this.progress = progress;
-//        if (progress == 0)
-//            this.progress = 2;
-//        Log.d("=====1", getMax() + "");
-        if (this.progress > getMax())
-        {
+    public void setProgress(double progress) {
+
+        if (this.progress > getMax()) {
             this.progress %= getMax();
+        } else {
+            this.progress = progress;
         }
         invalidate();
     }
 
-    public double getMax()
-    {
+    public double getMax() {
         return max;
     }
 
-    public void setMax(double max)
-    {
-        if (max > 0)
-        {
+    public void setMax(double max) {
+        if (max > 0) {
             this.max = max;
             invalidate();
         }
     }
 
-    public String getProgressTextTop()
-    {
+    public String getProgressTextTop() {
         return progressTextTop;
     }
 
-    public void setProgressTextTop(String progressTextTop)
-    {
+    public void setProgressTextTop(String progressTextTop) {
         this.progressTextTop = progressTextTop;
         this.invalidate();
     }
 
-    public String getProgressTextBottom()
-    {
+    public String getProgressTextBottom() {
         return progressTextBottom;
     }
 
-    public void setProgressTextBottom(String progressTextBottom)
-    {
+    public void setProgressTextBottom(String progressTextBottom) {
         this.progressTextBottom = progressTextBottom;
         this.invalidate();
     }
 
-    public float getBottomTextSize()
-    {
+    public float getBottomTextSize() {
         return bottomTextSize;
     }
 
-    public void setBottomTextSize(float bottomTextSize)
-    {
+    public void setBottomTextSize(float bottomTextSize) {
         this.bottomTextSize = bottomTextSize;
         this.invalidate();
     }
 
-    public float getProgressTextSize()
-    {
+    public float getProgressTextSize() {
         return progressTextSize;
     }
 
-    public void setProgressTextSize(float progressTextSize)
-    {
+    public void setProgressTextSize(float progressTextSize) {
         this.progressTextSize = progressTextSize;
         this.invalidate();
     }
 
-    public int getProgressTextColor()
-    {
+    public int getProgressTextColor() {
         return progressTextColor;
     }
 
-    public void setProgressTextColor(int progressTextColor)
-    {
+    public void setProgressTextColor(int progressTextColor) {
         this.progressTextColor = progressTextColor;
         this.invalidate();
     }
 
-    public int getFinishedStrokeColor()
-    {
+    public int getFinishedStrokeColor() {
         return finishedStrokeColor;
     }
 
-    public void setFinishedStrokeColor(int finishedStrokeColor)
-    {
+    public void setFinishedStrokeColor(int finishedStrokeColor) {
         this.finishedStrokeColor = finishedStrokeColor;
         this.invalidate();
     }
 
-    public int getUnfinishedStrokeColor()
-    {
+    public int getUnfinishedStrokeColor() {
         return unfinishedStrokeColor;
     }
 
-    public void setUnfinishedStrokeColor(int unfinishedStrokeColor)
-    {
+    public void setUnfinishedStrokeColor(int unfinishedStrokeColor) {
         this.unfinishedStrokeColor = unfinishedStrokeColor;
         this.invalidate();
     }
 
-    public float getArcAngle()
-    {
+    public float getArcAngle() {
         return arcAngle;
     }
 
-    public void setArcAngle(float arcAngle)
-    {
+    public void setArcAngle(float arcAngle) {
         this.arcAngle = arcAngle;
         this.invalidate();
     }
@@ -396,82 +358,91 @@ public class ArcProgress extends View
 //        this.invalidate();
 //    }
 
-    public float getSuffixTextPadding()
-    {
+    public float getSuffixTextPadding() {
         return suffixTextPadding;
     }
 
-    public void setSuffixTextPadding(float suffixTextPadding)
-    {
+    public void setSuffixTextPadding(float suffixTextPadding) {
         this.suffixTextPadding = suffixTextPadding;
         this.invalidate();
     }
 
     @Override
-    protected int getSuggestedMinimumHeight()
-    {
+    protected int getSuggestedMinimumHeight() {
         return min_size;
     }
 
     @Override
-    protected int getSuggestedMinimumWidth()
-    {
+    protected int getSuggestedMinimumWidth() {
         return min_size;
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        rectF.set(strokeWidth / 2f, strokeWidth / 2f, width - strokeWidth / 2f, MeasureSpec.getSize(heightMeasureSpec) - strokeWidth / 2f);
-        float radius = width / 2f;
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // 获取宽-测量规则的模式和大小
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+
+
+        // 获取高-测量规则的模式和大小
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+
+
+        int defaultSize = (int) Utils.dp2px(getResources(), 200);
+
+
+        // 当布局参数设置为wrap_content时，设置默认值
+        if (getLayoutParams().width == ViewGroup.LayoutParams.WRAP_CONTENT && getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            setMeasuredDimension(defaultSize, defaultSize);
+            rectF.set(strokeWidth, strokeWidth, defaultSize - strokeWidth, defaultSize - strokeWidth);
+            // 宽 / 高任意一个布局参数为= wrap_content时，都设置默认值
+        } else if (getLayoutParams().width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            setMeasuredDimension(defaultSize, heightSize);
+            rectF.set(strokeWidth, strokeWidth, defaultSize - strokeWidth, heightSize - strokeWidth);
+        } else if (getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            setMeasuredDimension(widthSize, defaultSize);
+            rectF.set(strokeWidth, strokeWidth, widthSize - strokeWidth, defaultSize - strokeWidth);
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            rectF.set(strokeWidth, strokeWidth, widthSize - strokeWidth, heightSize - strokeWidth);
+        }
+        float radius = widthSize / 2f;
         float angle = (360 - arcAngle) / 2f;
         arcBottomHeight = radius * (float) (1 - Math.cos(angle / 180 * Math.PI));
-        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
-    protected void onDraw(Canvas canvas)
-    {
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         float startAngle = 270 - arcAngle / 2f;
         double finishedSweepAngle = progress / (float) getMax() * arcAngle;
         float finishedStartAngle = startAngle;
         paint.setColor(unfinishedStrokeColor);
-//        paint.setColor(Color.parseColor("#AAAAAAAA"));
 
         canvas.drawArc(rectF, startAngle, arcAngle, false, paint);
         paint.setColor(finishedStrokeColor);
 
-//        paint.setColor(finishedStrokeColor);
 
-        Log.d("====3", getMax() + "," + startAngle);
-        if (getMax() == 0)
-        {
+        if (getMax() == 0) {
 
         }
 
-        if (getMax() != 0)
-        {
-            Log.d("====4", getMax() + "," + finishedStartAngle + "," + finishedSweepAngle);
+        if (getMax() != 0) {
             if (finishedSweepAngle != 0)
                 canvas.drawArc(rectF, finishedStartAngle, (float) finishedSweepAngle, false, paint);
         }
-        Log.d("====4", getProgress() + "");
 //        if (decimal_digits == 0)
 //            String text = Math.round(getProgress()) + progressSuffixText;
 //        else
         String text = null;
         if ((decimal_digits) == 0)
             text = Math.round(getProgress()) + progressSuffixText;
-        else
-        {
+        else {
             DecimalFormat decimalFormat = new DecimalFormat("0.00");//格式化设置
             text = decimalFormat.format(getProgress()) + progressSuffixText;
         }
-        if (!TextUtils.isEmpty(text))
-        {
+        if (!TextUtils.isEmpty(text)) {
             textPaint.setColor(progressTextColor);
             textPaint.setTextSize(progressTextSize);
             float textHeight = textPaint.descent() + textPaint.ascent();
@@ -479,23 +450,19 @@ public class ArcProgress extends View
             Typeface fontFace = Typeface.createFromAsset(mContext.getAssets(),
                     "fonts/t1.otf");
             textPaint.setTypeface(fontFace);
-            if (isText)
-            {
+            if (isText) {
                 canvas.drawText(mText, (getWidth() - textPaint.measureText(text)) / 2.0f, textBaseline, textPaint);
-            } else
-            {
+            } else {
                 canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, textBaseline, textPaint);
             }
 
 
-            if (!TextUtils.isEmpty(getProgressTextTop()))
-            {
+            if (!TextUtils.isEmpty(getProgressTextTop())) {
                 textPaint.setTextSize(progressTextTopSize);
                 textPaint.setColor(progressTextTopColor);
                 canvas.drawText(getProgressTextTop(), (getWidth() - textPaint.measureText(getProgressTextTop())) / 2.0f, textBaseline + textHeight - Utils.dp2px(getResources(), 20), textPaint);
             }
-            if (!TextUtils.isEmpty(getProgressTextBottom()))
-            {
+            if (!TextUtils.isEmpty(getProgressTextBottom())) {
                 textPaint.setTextSize(progressTextBottomSize);
                 textPaint.setColor(progressTextBottomColor);
                 canvas.drawText(getProgressTextBottom(), (getWidth() - textPaint.measureText(getProgressTextBottom())) / 2.0f, textBaseline - textHeight / 2 + Utils.dp2px(getResources(), 5), textPaint);
@@ -507,8 +474,7 @@ public class ArcProgress extends View
 //            canvas.drawText(suffixText, getWidth() / 2.0f + textPaint.measureText(text) + suffixTextPadding, textBaseline + textHeight - suffixHeight, textPaint);
         }
 
-        if (!TextUtils.isEmpty(getBottomText()))
-        {
+        if (!TextUtils.isEmpty(getBottomText())) {
             textPaint.setTextSize(bottomTextSize);
 
             float bottomTextBaseline = getHeight() - arcBottomHeight - (textPaint.descent() + textPaint.ascent()) / 2;
@@ -518,8 +484,7 @@ public class ArcProgress extends View
         }
     }
 
-    public void setText(String s)
-    {
+    public void setText(String s) {
         mText = s;
         invalidate();
     }
@@ -528,8 +493,7 @@ public class ArcProgress extends View
     public boolean isText = false;
 
     @Override
-    protected Parcelable onSaveInstanceState()
-    {
+    protected Parcelable onSaveInstanceState() {
         final Bundle bundle = new Bundle();
         bundle.putParcelable(INSTANCE_STATE, super.onSaveInstanceState());
         bundle.putFloat(INSTANCE_STROKE_WIDTH, getStrokeWidth());
@@ -562,10 +526,8 @@ public class ArcProgress extends View
     }
 
     @Override
-    protected void onRestoreInstanceState(Parcelable state)
-    {
-        if (state instanceof Bundle)
-        {
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof Bundle) {
             final Bundle bundle = (Bundle) state;
             strokeWidth = bundle.getFloat(INSTANCE_STROKE_WIDTH);
             suffixTextPadding = bundle.getFloat(INSTANCE_SUFFIX_TEXT_PADDING);

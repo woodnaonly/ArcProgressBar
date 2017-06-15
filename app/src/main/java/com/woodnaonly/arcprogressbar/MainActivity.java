@@ -18,14 +18,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mArcProgress1 = (ArcProgress) findViewById(R.id.ArcProgress1);
-        mArcProgress2 = (ArcProgress) findViewById(R.id.ArcProgress2);
-        mArcProgress3 = (ArcProgress) findViewById(R.id.ArcProgress3);
+//        mArcProgress2 = (ArcProgress) findViewById(R.id.ArcProgress2);
+//        mArcProgress3 = (ArcProgress) findViewById(R.id.ArcProgress3);
 
     }
 
     public void startAnim(View view)
     {
-        mArcProgress1.startAnim(3000);
+        mArcProgress1.startAnim(30000);
         mArcProgress2.startAnim(2000);
         mArcProgress3.startAnim();
     }
