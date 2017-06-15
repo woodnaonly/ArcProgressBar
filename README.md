@@ -1,7 +1,7 @@
 # ArcProgressBar
 圆弧刻度进度条
 ## DEMO
-![](./arcprogressbar.png)
+![](./img/screen.gif)
 ```xml
     <com.woodnaonly.arcprogress.ArcProgress
         android:id="@+id/ArcProgress1"
