@@ -1,6 +1,6 @@
 # ArcProgressBar
 圆弧刻度进度条
-##DEMO
+## DEMO
 ![](./arcprogressbar.png)
 ```xml
     <com.woodnaonly.arcprogress.ArcProgress
@@ -20,7 +20,7 @@
         app:arc_unfinished_color="#cb4628"
         app:decimal_digits="0"/>
 ```
-###Attributes
+### Attributes
 |name|format|description|
 |:---:|:---:|:---:|
 | arc_progress | integer | 初始值
