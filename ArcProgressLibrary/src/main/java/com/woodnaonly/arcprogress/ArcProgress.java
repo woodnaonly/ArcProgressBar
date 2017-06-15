@@ -27,7 +27,8 @@ import java.text.DecimalFormat;
  * 备注：
  */
 public class ArcProgress extends View {
-    private int DURATION = 500;
+    private final int DURATION = 500;
+    private final int DEFAULTSIZE = (int) Utils.dp2px(getResources(), 200);
     private Context mContext;
     private Paint paint;
     protected Paint textPaint;
@@ -105,6 +106,7 @@ public class ArcProgress extends View {
     private static final String INSTANCE_FINISHED_STROKE_COLOR = "finished_stroke_color";
     private static final String INSTANCE_UNFINISHED_STROKE_COLOR = "unfinished_stroke_color";
     private static final String INSTANCE_ARC_ANGLE = "arc_angle";
+
 
     public ArcProgress(Context context) {
         this(context, null);
@@ -389,24 +391,24 @@ public class ArcProgress extends View {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 
 
-        int defaultSize = (int) Utils.dp2px(getResources(), 200);
-
 
         // 当布局参数设置为wrap_content时，设置默认值
         if (getLayoutParams().width == ViewGroup.LayoutParams.WRAP_CONTENT && getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT) {
-            setMeasuredDimension(defaultSize, defaultSize);
-            rectF.set(strokeWidth, strokeWidth, defaultSize - strokeWidth, defaultSize - strokeWidth);
+            setMeasuredDimension(DEFAULTSIZE, DEFAULTSIZE);
+            widthSize = heightSize = DEFAULTSIZE;
             // 宽 / 高任意一个布局参数为= wrap_content时，都设置默认值
         } else if (getLayoutParams().width == ViewGroup.LayoutParams.WRAP_CONTENT) {
-            setMeasuredDimension(defaultSize, heightSize);
-            rectF.set(strokeWidth, strokeWidth, defaultSize - strokeWidth, heightSize - strokeWidth);
+            setMeasuredDimension(DEFAULTSIZE, heightSize);
+            widthSize = DEFAULTSIZE;
         } else if (getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT) {
-            setMeasuredDimension(widthSize, defaultSize);
-            rectF.set(strokeWidth, strokeWidth, widthSize - strokeWidth, defaultSize - strokeWidth);
+            setMeasuredDimension(widthSize, DEFAULTSIZE);
+            heightSize = DEFAULTSIZE;
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-            rectF.set(strokeWidth, strokeWidth, widthSize - strokeWidth, heightSize - strokeWidth);
         }
+
+
+        rectF.set(strokeWidth, strokeWidth, widthSize - strokeWidth, heightSize - strokeWidth);
         float radius = widthSize / 2f;
         float angle = (360 - arcAngle) / 2f;
         arcBottomHeight = radius * (float) (1 - Math.cos(angle / 180 * Math.PI));

@@ -10,7 +10,7 @@
 
     <com.woodnaonly.arcprogress.ArcProgress
         android:id="@+id/ArcProgress1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:arc_finished_color="#fff"
         app:arc_max="100"
@@ -25,54 +25,54 @@
         app:arc_unfinished_color="#cb4628"
         app:decimal_digits="0"/>
 
-    <!--<com.woodnaonly.arcprogress.ArcProgress-->
-        <!--android:id="@+id/ArcProgress2"-->
-        <!--android:layout_width="200dp"-->
-        <!--android:layout_height="200dp"-->
-        <!--android:layout_toRightOf="@+id/ArcProgress1"-->
-        <!--app:arc_finished_color="@color/white"-->
-        <!--app:arc_max="100"-->
-        <!--app:arc_progress="10"-->
-        <!--app:arc_progress_text_bottom_color="#ccffffff"-->
-        <!--app:arc_progress_text_bottom_size="12sp"-->
-        <!--app:arc_progress_text_color="@color/white"-->
-        <!--app:arc_progress_text_size="79sp"-->
-        <!--app:arc_progress_text_top_color="#ccffffff"-->
-        <!--app:arc_progress_text_top_size="12sp"-->
-        <!--app:arc_progress_text_top_text="每天目标(KM)"-->
-        <!--app:arc_stroke_width="8dp"-->
-        <!--app:arc_unfinished_color="#cb4628"-->
-        <!--app:decimal_digits="2"/>-->
+    <com.woodnaonly.arcprogress.ArcProgress
+        android:id="@+id/ArcProgress2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_toRightOf="@+id/ArcProgress1"
+        app:arc_finished_color="@color/white"
+        app:arc_max="100"
+        app:arc_progress="10"
+        app:arc_progress_text_bottom_color="#ccffffff"
+        app:arc_progress_text_bottom_size="12sp"
+        app:arc_progress_text_color="@color/white"
+        app:arc_progress_text_size="79sp"
+        app:arc_progress_text_top_color="#ccffffff"
+        app:arc_progress_text_top_size="12sp"
+        app:arc_progress_text_top_text="每天目标(KM)"
+        app:arc_stroke_width="8dp"
+        app:arc_unfinished_color="#cb4628"
+        app:decimal_digits="2"/>
 
 
-    <!--<com.woodnaonly.arcprogress.ArcProgress-->
-        <!--android:id="@+id/ArcProgress3"-->
-        <!--android:layout_width="200dp"-->
-        <!--android:layout_height="200dp"-->
-        <!--app:arc_finished_color="@color/white"-->
-        <!--app:arc_max="100"-->
-        <!--app:arc_progress="10"-->
-        <!--app:arc_progress_text_bottom_color="#ccffffff"-->
-        <!--app:arc_progress_text_bottom_size="12sp"-->
-        <!--app:arc_progress_text_bottom_text="完成度"-->
-        <!--app:arc_progress_text_color="@color/white"-->
-        <!--app:arc_progress_text_size="79sp"-->
-        <!--app:arc_progress_text_top_color="#ccffffff"-->
-        <!--app:arc_progress_text_top_size="12sp"-->
-        <!--app:arc_progress_text_top_text="每天目标(KM)"-->
-        <!--app:arc_stroke_width="8dp"-->
-        <!--app:arc_unfinished_color="#cb4628"-->
-        <!--app:decimal_digits="3"-->
-        <!--android:layout_below="@+id/ArcProgress2"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"/>-->
+    <com.woodnaonly.arcprogress.ArcProgress
+        android:id="@+id/ArcProgress3"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:arc_finished_color="@color/white"
+        app:arc_max="100"
+        app:arc_progress="10"
+        app:arc_progress_text_bottom_color="#ccffffff"
+        app:arc_progress_text_bottom_size="12sp"
+        app:arc_progress_text_bottom_text="完成度"
+        app:arc_progress_text_color="@color/white"
+        app:arc_progress_text_size="79sp"
+        app:arc_progress_text_top_color="#ccffffff"
+        app:arc_progress_text_top_size="12sp"
+        app:arc_progress_text_top_text="每天目标(KM)"
+        app:arc_stroke_width="8dp"
+        app:arc_unfinished_color="#cb4628"
+        app:decimal_digits="3"
+        android:layout_below="@+id/ArcProgress2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
-    <!--<Button-->
-        <!--android:text="Button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/ArcProgress3"-->
-        <!--android:onClick="startAnim"-->
-        <!--android:id="@+id/button"/>-->
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ArcProgress3"
+        android:onClick="startAnim"
+        android:id="@+id/button"/>
 
 </RelativeLayout>
