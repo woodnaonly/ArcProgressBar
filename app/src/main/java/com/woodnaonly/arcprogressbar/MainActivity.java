@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mArcProgress1 = (ArcProgress) findViewById(R.id.ArcProgress1);
-//        mArcProgress2 = (ArcProgress) findViewById(R.id.ArcProgress2);
-//        mArcProgress3 = (ArcProgress) findViewById(R.id.ArcProgress3);
+        mArcProgress2 = (ArcProgress) findViewById(R.id.ArcProgress2);
+        mArcProgress3 = (ArcProgress) findViewById(R.id.ArcProgress3);
 
     }
 
